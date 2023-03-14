@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS public."user"
+(
+    user_id integer NOT NULL,
+    name character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    surname character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    data_of_registration date NOT NULL,
+    CONSTRAINT user_pkey PRIMARY KEY (user_id)
+);
+CREATE TABLE IF NOT EXISTS public.wallet
+(
+    wallet_id integer NOT NULL,
+    currency character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    amount numeric NOT NULL DEFAULT 0,
+    user_id integer NOT NULL,
+    CONSTRAINT wallet_pkey PRIMARY KEY (wallet_id),
+    CONSTRAINT user_id FOREIGN KEY (user_id)
+        REFERENCES public."user" (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+INSERT INTO public."user"(
+	user_id, name, surname, data_of_registration)
+	VALUES
+	(01, 'Oksana', 'Pilkin', '14/03/2023'),
+	(02, 'Galina', 'Pilkin', '14/03/2023'),
+	(03, 'Bogdan', 'Borovetch', '14/03/2023'),
+	(04, 'Georgy', 'Rashfal', '01/01/2023');
+
+	INSERT INTO public.wallet(
+    	wallet_id, currency, amount, user_id)
+    	VALUES
+    	(11, 'NIS', 200, 01),
+    	(22, 'UAN', 2000, 02),
+    	(33, '$', 100, 03);
+
+	SELECT name,currency,amount
+    	FROM public."user" JOIN public."wallet"
+    	ON "wallet".user_id = "user".user_id;
+
