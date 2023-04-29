@@ -12,7 +12,7 @@ public class ClassExamplesTest {
         String str = "A man, a plan, a canal: Panama";
         boolean result = exampels.isPalindrome(str);
         Assert.assertEquals(true, result);
-    }
+}
 
     @Test
     public void isPalindromeNegativeTest() {
